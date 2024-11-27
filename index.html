@@ -20,7 +20,7 @@
         document.getElementById('stockForm').addEventListener('submit', async (event) => {
             event.preventDefault();
             const symbol = document.getElementById('symbol').value;
-            const response = await fetch('https://colab.research.google.com/drive/1ph2Ggflbx4GHegWWCC5I2i3G6N6aExR9#scrollTo=hiL0s5082ZKp/predict', {
+            const response = await fetch('https://2113-34-138-10-77.ngrok-free.app/predict', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ symbol })
