@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Prediction</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Stock Price Prediction</h1>
+        <form id="stockForm">
+            <input type="text" id="symbol" placeholder="Enter Stock Symbol (e.g., AAPL)" required>
+            <button type="submit">Predict</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('stockForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const symbol = document.getElementById('symbol').value;
+            const response = await fetch('<YOUR_COLAB_BACKEND_URL>/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ symbol })
+            });
+
+            const data = await response.json();
+            const resultDiv = document.getElementById('result');
+            if (response.ok) {
+                resultDiv.innerHTML = `
+                    <h2>Predicted Prices:</h2>
+                    <ul>${data.predictions.map((price, index) => `<li>Day ${index + 1}: $${price.toFixed(2)}</li>`).join('')}</ul>
+                `;
+            } else {
+                resultDiv.innerHTML = `<p>Error: ${data.error}</p>`;
+            }
+        });
+    </script>
+</body>
+</html>
